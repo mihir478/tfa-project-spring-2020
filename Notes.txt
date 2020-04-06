@@ -1,3 +1,5 @@
 cd "C:\Users\mihir\OneDrive\Documents\Columbia\Tools for Analytics\tfa-project-spring-2020"
 
 ssh-keygen -C "ms4267@columbia.edu" -t rsa
+
+python manage.py export_squirrel_data /path/to/file.csv

@@ -4,7 +4,7 @@ import csv, sqlite3
 
 if sys.argv[1] == "import_squirrel_data":
   path = sys.argv[2]
-  import_squirrel_data(path)    
+  import_squirrel_data(path)
 
 
 def import_squirrel_data(path):
@@ -27,49 +27,49 @@ def import_squirrel_data(path):
         dr = csv.DictReader(fin)
         to_db = [
             (
-              i['Xi]',
-              i['Yi]', 
-              i['UniqueSquirrelIDi]',
-              i['Hectarei]',
-              i['Shifti]',
-              i['Datei]',
-              i['HectareSquirrelNumberi]',
-              i['Agei]',
-              i['PrimaryFurColori]',
-              i['HighlightFurColori]',
-              i['CombinationofPrimaryandHighlightColori]',
-              i['Colornotesi]',
-              i['Locationi]',
-              i['AboveGroundSighterMeasurementi]',
-              i['SpecificLocationi]',
-              i['Runningi]',
-              i['Chasingi]',
-              i['Climbingi]',
-              i['Eatingi]',
-              i['Foragingi]',
-              i['OtherActivitiesi]',
-              i['Kuksi]',
-              i['Quaasi]',
-              i['Moansi]',
-              i['Tailflagsi]',
-              i['Tailtwitchesi]',
-              i['Approachesi]',
-              i['Indifferenti]',
-              i['Runsfromi]',
-              i['OtherInteractionsi]',
-              i['Lat/Longi]',
-              i['ZipCodesi]',
-              i['CommunityDistrictsi]',
-              i['BoroughBoundariesi]',
-              i['CityCouncilDistrictsi]',
-              i['PolicePrecinctsi]') for i in dr]
+              i['Xi'],
+              i['Yi'],
+              i['UniqueSquirrelIDi'],
+              i['Hectarei'],
+              i['Shifti'],
+              i['Datei'],
+              i['HectareSquirrelNumberi'],
+              i['Agei'],
+              i['PrimaryFurColori'],
+              i['HighlightFurColori'],
+              i['CombinationofPrimaryandHighlightColori'],
+              i['Colornotesi'],
+              i['Locationi'],
+              i['AboveGroundSighterMeasurementi'],
+              i['SpecificLocationi'],
+              i['Runningi'],
+              i['Chasingi'],
+              i['Climbingi'],
+              i['Eatingi'],
+              i['Foragingi'],
+              i['OtherActivitiesi'],
+              i['Kuksi'],
+              i['Quaasi'],
+              i['Moansi'],
+              i['Tailflagsi'],
+              i['Tailtwitchesi'],
+              i['Approachesi'],
+              i['Indifferenti'],
+              i['Runsfromi'],
+              i['OtherInteractionsi'],
+              i['Lat/Longi'],
+              i['ZipCodesi'],
+              i['CommunityDistrictsi'],
+              i['BoroughBoundariesi'],
+              i['CityCouncilDistrictsi'],
+              i['PolicePrecinctsi']) for i in dr]
 
     cur.executemany(f"INSERT INTO SquirrelData ({commaDelimitedColumns}) VALUES (?, ?);", to_db)
-      
+
     cur.execute(f"SELECT * FROM SquirrelData;", to_db)
 
     rows = cur.fetchall()
- 
+
     for row in rows:
       print(row)
 
