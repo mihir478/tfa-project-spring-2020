@@ -2,27 +2,55 @@ import sys
 import csv
 import sqlite3
 
+
+
 def import_squirrel_data(path):
 
-    columns = ['X', 'Y', 'Unique Squirrel ID', 'Hectare', 'Shift', 'Date', 'Hectare Squirrel Number', 'Age',
-               'Primary Fur Color', 'Highlight Fur Color', 'Combination of Primary and Highlight Color', 'Color notes',
-               'Location',
-               'Above Ground Sighter Measurement', 'Specific Location', 'Running', 'Chasing', 'Climbing', 'Eating',
-               'Foraging',
-               'Other Activities', 'Kuks', 'Quaas', 'Moans', 'Tail flags', 'Tail twitches', 'Approaches', 'Indifferent',
-               'Runs from', 'Other Interactions', 'Lat/Long', 'Zip Codes', 'Community Districts', 'Borough Boundaries',
-               'City Council Districts', 'Police Precincts']
+    columns = ['X',
+               'Y',
+               'Unique Squirrel ID',
+               'Shift',
+               'Date',
+                'Age',
+                'Primary Fur Color',
+                'Location',
+                'Specific Location',
+                'Running',
+                'Chasing',
+                'Climbing',
+                'Eating',
+                'Foraging',
+                'Other Activities',
+                'Kuks',
+                'Quaas',
+                'Moans',
+                'Tail flags',
+                'Tail twitches',
+                'Approaches',
+                'Indifferent',
+                'Runs from']
+
+    column_line = ','.join(columns)
+
+    wildcards = '?,' * (len(columns)-1) + '?'
 
     con = sqlite3.connect(':memory:')
     cur = con.cursor()
-    cur.execute(f'CREATE TABLE SquirrelData (X, Y);')
+
+    print(cur.execute(f'CREATE TABLE SquirrelData ({column_line});'))
+    cur.execute(f'CREATE TABLE SquirrelData ({column_line});')
+
+    col_expr = ''
+    for col in columns:
+        col_expr += "i['" + col + "'],"
+    col_expr = col_expr[:-1]
 
     with open(path, 'rt') as fin:
         dr = csv.DictReader(fin)
         to_db = [
-            (
-                i['X'],
-                i['Y']
+            (eval(col_expr)
+                #i['X'],
+                #i['Y']
                 # i['UniqueSquirrelID'],
                 # i['Hectare'],
                 # i['Shift'],
@@ -59,9 +87,11 @@ def import_squirrel_data(path):
                 # i['PolicePrecincts']
             ) for i in dr]
 
-    cur.executemany(f'INSERT INTO SquirrelData (X, Y) VALUES (?, ?);', to_db)
+    print(f'INSERT INTO SquirrelData ({column_line}) VALUES ({wildcards});')
+    cur.executemany(f'INSERT INTO SquirrelData ({column_line}) VALUES ({wildcards});', to_db)
 
-    cur.execute(f'SELECT X, Y FROM SquirrelData;')
+
+    cur.execute(f'SELECT {column_line} FROM SquirrelData;')
 
     rows = cur.fetchall()
 
