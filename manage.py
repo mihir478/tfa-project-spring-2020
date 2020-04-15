@@ -4,6 +4,9 @@ import sqlite3
 
 
 def import_squirrel_data(column_line, cur, path):
+
+    cur.execute(f'CREATE TABLE SquirrelData ({column_line});')
+
     col_expr = ''
     for col in columns:
         space = col.find(' ') >= 0
@@ -61,8 +64,6 @@ if __name__ == '__main__':
 
     con = sqlite3.connect(':memory:')
     cur = con.cursor()
-
-    cur.execute(f'CREATE TABLE SquirrelData ({column_line});')
 
     if sys.argv[1] == 'import_squirrel_data':
         path = sys.argv[2]
