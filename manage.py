@@ -3,7 +3,33 @@ import csv
 import sqlite3
 
 
-def import_squirrel_data(path):
+def import_squirrel_data(column_line, cur, path):
+    col_expr = ''
+    for col in columns:
+        space = col.find(' ') >= 0
+        # quote multi token column names
+        col_expr += 'i[' + col + '],' if space else 'i["' + col + '"],'
+    # remove last ,
+    col_expr = col_expr[:-1]
+
+    with open(path, 'rt') as fin:
+        dr = csv.DictReader(fin)
+        to_db = [(eval(col_expr)) for i in dr]
+
+    cur.executemany(f'INSERT INTO SquirrelData ({column_line}) VALUES ({wildcards});', to_db)
+    export_squirrel_data(column_line, cur, 'rows.csv')  # TODO remove
+
+
+def export_squirrel_data(column_line, cur, path):
+    cur.execute(f'SELECT {column_line} FROM SquirrelData;')
+    rows = cur.fetchall()
+    with open(path, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(column_line.replace('"', '').split(','))
+        writer.writerows(rows)
+
+if __name__ == '__main__':
+
     columns = ['X',
                'Y',
                '"Unique Squirrel ID"',
@@ -38,32 +64,12 @@ def import_squirrel_data(path):
 
     cur.execute(f'CREATE TABLE SquirrelData ({column_line});')
 
-    col_expr = ''
-    for col in columns:
-        space = col.find(' ') >= 0
-        # quote multi token column names
-        col_expr += 'i[' + col + '],' if space else 'i["' + col + '"],'
-    # remove last ,
-    col_expr = col_expr[:-1]
-
-    with open(path, 'rt') as fin:
-        dr = csv.DictReader(fin)
-        to_db = [(eval(col_expr)) for i in dr]
-
-    cur.executemany(f'INSERT INTO SquirrelData ({column_line}) VALUES ({wildcards});', to_db)
-    # print_table(column_line, cur)
+    if sys.argv[1] == 'import_squirrel_data':
+        path = sys.argv[2]
+        import_squirrel_data(column_line, cur, path)
+    if sys.argv[1] == 'export_squirrel_data':
+        path = sys.argv[2]
+        export_squirrel_data(column_line, cur, path)
 
     con.commit()
     con.close()
-
-
-def print_table(column_line, cur):
-    cur.execute(f'SELECT {column_line} FROM SquirrelData;')
-    rows = cur.fetchall()
-    for row in rows:
-        print(row)
-
-if __name__ == '__main__':
-    if sys.argv[1] == 'import_squirrel_data':
-        path = sys.argv[2]
-    import_squirrel_data(path)
