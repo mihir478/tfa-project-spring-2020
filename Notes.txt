@@ -6,8 +6,4 @@ python manage.py export_squirrel_data /path/to/file.csv
 
 python manage.py import_squirrel_data ./2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv
 
-# Python3 program introducing f-string
-val = 'Geeks'
-print(f"{val}for{val} is a portal for {val}.")
 
- python -m pdb manage.py import_squirrel_data ./2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv
