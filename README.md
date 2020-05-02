@@ -1,7 +1,7 @@
 # Squirrel Tracker Project 
 ## Description
 ## 1.Introduction
-We biult an application to track of all the known squirrels at Central Park. Users can view the map, update the sightings, create new sightings, and see some general statistics on the web.  
+We built an application to track all the known squirrels at Central Park. Users can view the map, update the sightings, create new sightings, and see some general statistics on the web.  
 [Try it!](link our website here)  
 
 ## 2. Import and export squirrels data.
