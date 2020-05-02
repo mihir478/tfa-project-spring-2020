@@ -1,3 +1,0 @@
-Tasks.txt
-
-1) Update description and link in README
