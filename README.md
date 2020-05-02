@@ -20,8 +20,8 @@ Note: we already prepared squirrel dataset in home directory for users to import
  #### 3.2 Sighingts
  ...
 
-## 4. Group Information
+## Group Information
 ####Group name and section: Project Group 9, Section 001
 ####UNIs: [ms4267, yt2711]
-#### Link to the server
+#### Link to the server:
 *A link to the server running our application: ...
