@@ -1,43 +1,137 @@
 <!doctype html>
 <html>
-	<head>
-	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  ````<style>
 
-	</head>
-	<body>
+	.axis {
+	  font: 14px sans-serif bold;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	</style>
+</head>
+<body>
 
 <table class="table table-hover">
 
-    <thead>
-        <h2 style = "font-family:Allerta+Stencil,serif;font-size:32px;font-style:normal;">Squirrel Sightings Stats</h2>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="col">Total Sightings</th>
-            <td>{{count}}</td>
-        </tr>
-        <tr>
-            <th scope="col">Age Breakdown</th>
-            <td>
-                <span style="margin-right: 20px">Adult: {{age_adult}}% </span>
-                <span style="margin-right: 20px">Juvenile: {{age_juvenile}}% </span>
-                <span style="margin-right: 20px">Missing: {{age_missing}}%</span>
-            </td>
-        </tr>
-        <tr>
-            <th scope="col">Primary Fur Color Breakdown</th>
-            <td>
-                <span style="color:gray; margin-right: 20px">Gray: {{color_gray}}%</span>
-                <span style="color:saddlebrown; margin-right: 20px">Cinnamon: {{color_cinnamon}}%</span>
-                <span>Black: {{color_black}}%</span>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+  <h2 style = "font-family:Allerta+Stencil,serif;font-size:32px;font-style:normal;">Squirrel Sightings Stats</h2>
+  </thead>
+  <tbody>
+  <tr>
+    <th scope="col">Total Sightings</th>
+    <td>{{count}}</td>
+  </tr>
+  <tr>
+    <th scope="col">Age Breakdown</th>
+    <td>
+      <span style="color:skyblue; margin-right: 20px">Adult: {{age_adult}}% </span>
+      <span style="color:orange; margin-right: 20px">Juvenile: {{age_juvenile}}% </span>
+      <span style="margin-right: 20px">Missing: {{age_missing}}%</span>
+    </td>
+  </tr>
+  <tr>
+    <th scope="col">Primary Fur Color Breakdown</th>
+    <td>
+      <span style="color:gray; margin-right: 20px">Gray: {{color_gray}}%</span>
+      <span style="color:saddlebrown; margin-right: 20px">Cinnamon: {{color_cinnamon}}%</span>
+      <span style="margin-right: 20px">Black: {{color_black}}%</span>
+      <span style="color:lightgray">Missing: {{color_missing}}%</span>
+    </td>
+  </tr>
+  </tbody>
 </table>
+<h2 style="font-family:Allerta+Stencil,serif;font-size:16px;font-weight:bold; margin-left: 15px">Squirrel Sightings Timeseries</h2>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+</body>
+<script>
+var margin = {top: 20, right: 20, bottom: 100, left: 70},
+    width = 600 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
-	</body>
+// Parse the date / time
+var	parseDate = d3.time.format("%Y-%m-%d").parse;
+
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+
+var y = d3.scale.linear().range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .tickFormat(d3.time.format("%m-%d-%Y"));
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(5);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+    var timeseries = {{ sighting_timeseries | safe }}
+    var data = []
+
+    for(key in timeseries) {
+      data.push({
+          date: key,
+          value: timeseries[key]
+      });
+     }
+
+    data.sort(function(a, b) {
+      return new Date(a.date) - new Date(b.date);
+    });
+
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d.value = +d.value;
+    });
+
+  x.domain(data.map(function(d) { return d.date; }));
+  y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", "-.25em")
+      .attr("transform", "rotate(-90)" );
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end");
+
+  svg.selectAll("bar")
+      .data(data)
+    .enter().append("rect")
+      .style("fill", "#ff6361")
+      .attr("x", function(d) { return x(d.date); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.value); })
+      .attr("height", function(d) { return height - y(d.value); });
+</script>
 </html>
