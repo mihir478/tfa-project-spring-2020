@@ -24,8 +24,18 @@ def get_sighting(request, unique_squirrel_id):
 
 
 def stats(request):
+    sightings = Sighting.objects.all()
     count = Sighting.objects.all().count()
-    age_adult = Sighting.objects.all().filter(age='adult').count()/count*100
-    age_juv = Sighting.objects.all().filter(age='juvenile').count()/count*100
-
-    return render(request,'tracker/stats.html', {'count': count,'adult': age_adult,'juvenile': age_juv})
+    age_adult = len(sightings.filter(age='Adult')) / count * 100
+    age_juvenile = len(sightings.filter(age='Juvenile')) / count * 100
+    age_missing = 100 - age_adult - age_juvenile
+    precision = 1
+    age_adult_formatted = '{:.{}f}'.format(age_adult, precision)
+    age_juvenile_formatted = '{:.{}f}'.format(age_juvenile, precision)
+    age_missing_formatted = '{:.{}f}'.format(age_missing, precision)
+    return render(request, 'tracker/stats.html', {
+        'count': count,
+        'age_adult': age_adult_formatted,
+        'age_juvenile': age_juvenile_formatted,
+        'age_missing': age_missing_formatted
+    })
