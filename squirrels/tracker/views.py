@@ -21,3 +21,8 @@ def sightings_list(request):
 def get_sighting(request, unique_squirrel_id):
     sighting = Sighting.objects.all().filter(unique_squirrel_id=unique_squirrel_id)[0]
     return render(request, 'tracker/sighting.html', {'sighting': sighting})
+
+
+def stats(request):
+    stats1 = Sighting.objects.all().count()
+    return render(request,'tracker/stats.html', {'stats1': stats1})
