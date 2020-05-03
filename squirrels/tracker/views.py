@@ -12,9 +12,11 @@ def sightings_map(request):
     sightings = Sighting.objects.all()
     return render(request, 'tracker/map.html', {'sightings': sightings})
 
-def sighting_list(request):
-    list_ = Sighting.objects.all()
-    return render(request, 'tracker/list.html', {'sightings': list_})
+
+def sightings_list(request):
+    sightings = Sighting.objects.all()
+    return render(request, 'tracker/sightings.html', {'sightings': sightings})
+
 
 def get_sighting(request, unique_squirrel_id):
     sighting = Sighting.objects.all().filter(unique_squirrel_id=unique_squirrel_id)[0]
