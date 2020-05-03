@@ -14,28 +14,23 @@
     <tbody>
         <tr>
             <th scope="col">Total Sightings</th>
-            <td>The total number of sightings is {{count}}</td>
+            <td>{{count}}</td>
         </tr>
         <tr>
             <th scope="col">Age Breakdown</th>
-            <td>The age breakdown is adult: {{age_adult}}%, juvenile: {{age_juvenile}}% and missing: {{age_missing}}%</td>
+            <td>
+                <span style="margin-right: 20px">Adult: {{age_adult}}% </span>
+                <span style="margin-right: 20px">Juvenile: {{age_juvenile}}% </span>
+                <span style="margin-right: 20px">Missing: {{age_missing}}%</span>
+            </td>
         </tr>
         <tr>
-            <th scope="col">Primary Fur Color</th>
-            <td style="color:gray">Gray: {{color_gray}}%</td>
-        </tr>
-
-        <tr>
-            <th scope="col">          </th>
-            <td style="color:saddlebrown">Cinnamon: {{color_cinnamon}}%</td>
-        </tr>
-        <tr>
-            <th scope="col">          </th>
-            <td>Black: {{color_black}}%</td>
-        </tr>
-        <tr>
-            <th scope="col">Date Range</th>
-            <td>From {{sightings.date.min}} to {{sightings.date.max}}</td>
+            <th scope="col">Primary Fur Color Breakdown</th>
+            <td>
+                <span style="color:gray; margin-right: 20px">Gray: {{color_gray}}%</span>
+                <span style="color:saddlebrown; margin-right: 20px">Cinnamon: {{color_cinnamon}}%</span>
+                <span>Black: {{color_black}}%</span>
+            </td>
         </tr>
     </tbody>
 </table>
