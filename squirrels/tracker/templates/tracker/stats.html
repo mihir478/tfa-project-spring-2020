@@ -30,11 +30,22 @@
     <td>{{count}}</td>
   </tr>
   <tr>
+    <th scope="col">Average Sightings per Day</th>
+    <td>{{avg_sightings_per_day}}</td>
+  </tr>
+  <tr>
+    <th scope="col">Shift Breakdown</th>
+    <td>
+      <span style="color:skyblue; margin-right: 20px">AM: {{shift_am}} </span>
+      <span style="color:orange;">PM: {{shift_pm}} </span>
+    </td>
+  </tr>
+  <tr>
     <th scope="col">Age Breakdown</th>
     <td>
       <span style="color:skyblue; margin-right: 20px">Adult: {{age_adult}}% </span>
       <span style="color:orange; margin-right: 20px">Juvenile: {{age_juvenile}}% </span>
-      <span style="margin-right: 20px">Missing: {{age_missing}}%</span>
+      <span style="color:lightgray; margin-right: 20px">Missing: {{age_missing}}%</span>
     </td>
   </tr>
   <tr>

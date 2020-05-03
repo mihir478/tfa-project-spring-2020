@@ -27,4 +27,5 @@ class Command(BaseCommand):
                 primary_fur_color=dict_['Primary Fur Color'],
             ))
 
+        Sighting.objects.all().delete()
         Sighting.objects.bulk_create(sightings)

@@ -3,6 +3,8 @@ from django.shortcuts import render
 
 from .models import Sighting
 import json
+import math
+
 
 def index():
     return HttpResponse('Hello, User!')
@@ -27,6 +29,9 @@ def stats(request):
     sightings = Sighting.objects.all()
     count = Sighting.objects.all().count()
 
+    shift_am = len(sightings.filter(shift='am'))
+    shift_pm = len(sightings.filter(shift='pm'))
+
     age_adult = len(sightings.filter(age='Adult')) / count * 100
     age_juvenile = len(sightings.filter(age='Juvenile')) / count * 100
     age_missing = 100 - age_adult - age_juvenile
@@ -35,7 +40,7 @@ def stats(request):
     age_juvenile_formatted = '{:.{}f}'.format(age_juvenile, precision)
     age_missing_formatted = '{:.{}f}'.format(age_missing, precision)
 
-    color_gray = len(sightings.filter(primary_fur_color='Gray'))/count * 100
+    color_gray = len(sightings.filter(primary_fur_color='Gray')) / count * 100
     color_cinnamon = len(sightings.filter(primary_fur_color='Cinnamon')) / count * 100
     color_black = len(sightings.filter(primary_fur_color='Black')) / count * 100
     color_missing = 100 - color_gray - color_cinnamon - color_black
@@ -52,9 +57,13 @@ def stats(request):
         else:
             date_dict[date_str] = 1
     sighting_timeseries = json.dumps(date_dict)
+    avg_sightings_per_day = math.floor(count / len(date_dict.keys()))
 
     return render(request, 'tracker/stats.html', {
         'count': count,
+        'avg_sightings_per_day': avg_sightings_per_day,
+        'shift_am': shift_am,
+        'shift_pm': shift_pm,
         'age_adult': age_adult_formatted,
         'age_juvenile': age_juvenile_formatted,
         'age_missing': age_missing_formatted,
