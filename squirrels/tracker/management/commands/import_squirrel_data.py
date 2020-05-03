@@ -23,7 +23,8 @@ class Command(BaseCommand):
                 unique_squirrel_id=dict_['Unique Squirrel ID'],
                 shift=dict_['Shift'].lower(),
                 date=timezone.datetime.strptime(dict_['Date'], '%m%d%Y').date(),
-                age=dict_['Age']
+                age=dict_['Age'],
+                primary_fur_color=dict_['Primary Fur Color'],
             ))
 
         Sighting.objects.bulk_create(sightings)
