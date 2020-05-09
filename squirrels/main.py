@@ -1,1 +1,1 @@
-from squirrels.squirrels.wsgi import application as app
+from squirrels.wsgi import application as app
