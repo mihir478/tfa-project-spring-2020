@@ -1,0 +1,47 @@
+python -m venv env
+
+source env/bin/activate
+
+\Scripts\activate.bat
+
+pip freeze
+
+deactivate
+
+echo $SHELL
+
+echo $PATH
+
+python manage.py import_squirrel_data ../data.csv
+
+django-admin startproject squirrels
+
+django-admin startapp tracker
+
+pip freeze > requirements.txt
+
+pip install -r requirements.txt
+
+restart:
+
+deactivate
+
+rm -rf env
+
+ALLOWED_HOSTS = ['*']
+
+sudo /home/ms4267/project/env/bin/python manage.py runserver 0.0.0.0:80
+
+python manage.py runserver 0.0.0.0:80
+
+python manage.py migrate
+
+python manage.py makemigrations
+
+python manage.py createsuperuser
+
+http://192.168.1.5/
+
+mihir
+ms4267@columbia.edu
+12345

@@ -1,0 +1,6 @@
+\dt relations
+\l list databases
+\c connect to db
+\q quit
+remember semis
+
