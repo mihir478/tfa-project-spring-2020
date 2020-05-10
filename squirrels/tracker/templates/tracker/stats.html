@@ -1,323 +1,317 @@
 <!doctype html>
 <html>
-<head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <style>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
 
-	.axis {
-	  font: 14px sans-serif bold;
-	}
+      .axis {
+        font: 14px sans-serif bold;
+      }
 
-	.axis path,
-	.axis line {
-	  fill: none;
-	  stroke: #000;
-	  shape-rendering: crispEdges;
-	}
-
-  </style>
-  <style>
-
-    path.slice{
-        stroke-width:2px;
-    }
-
-    polyline{
-        opacity: .3;
-        stroke: black;
-        stroke-width: 2px;
+      .axis path,
+      .axis line {
         fill: none;
-    }
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
 
-    polyline:nth-child(4){
-	    stroke: none;
-    }
+    </style>
+    <style>
 
-  </style>
-</head>
-<body>
+      path.slice{
+          stroke-width:2px;
+      }
 
-<table class="table table-hover">
+      polyline{
+          opacity: .3;
+          stroke: black;
+          stroke-width: 2px;
+          fill: none;
+      }
 
-  <thead>
-  <h2 style = "font-family:Allerta+Stencil,serif;font-size:32px;font-style:normal;">Squirrel Sightings Stats</h2>
-  </thead>
-  <tbody>
-  <tr>
-    <th scope="col">Total Sightings</th>
-    <td>{{count}}</td>
-  </tr>
-  <tr>
-    <th scope="col">Average Sightings per Day</th>
-    <td>{{avg_sightings_per_day}}</td>
-  </tr>
-  <tr>
-    <th scope="col">Shift Breakdown</th>
-    <td>
-      <span style="color:skyblue; margin-right: 20px">AM: {{shift_am}} </span>
-      <span style="color:orange;">PM: {{shift_pm}} </span>
-    </td>
-  </tr>
-  <tr>
-    <th scope="col">Age Breakdown</th>
-    <td>
-      <span style="color:skyblue; margin-right: 20px">Adult: {{age_adult}}% </span>
-      <span style="color:orange; margin-right: 20px">Juvenile: {{age_juvenile}}% </span>
-      <span style="color:lightgray; margin-right: 20px">Missing: {{age_missing}}%</span>
-    </td>
-  </tr>
-  <tr>
-    <th scope="col">Primary Fur Color Breakdown</th>
-    <td>
-      <span style="color:gray; margin-right: 20px">Gray: {{color_gray}}%</span>
-      <span style="color:saddlebrown; margin-right: 20px">Cinnamon: {{color_cinnamon}}%</span>
-      <span style="margin-right: 20px">Black: {{color_black}}%</span>
-      <span style="color:lightgray">Missing: {{color_missing}}%</span>
-    </td>
-  </tr>
-  </tbody>
-</table>
-<h2 style="font-family:Allerta+Stencil,serif;font-size:16px;font-weight:bold; margin-left: 15px">Squirrel Sightings Timeseries</h2>
+      polyline:nth-child(4){
+        stroke: none;
+      }
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-</body>
-<script>
-var margin = {top: 20, right: 20, bottom: 100, left: 70},
-    width = 600 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    </style>
+  </head>
+  <body>
+    <table class="table table-hover">
+      <thead>
+        <h2 style = "font-family:Allerta+Stencil,serif;font-size:32px;font-style:normal;">Squirrel Sightings Stats</h2>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="col">Total Sightings</th>
+          <td>{{count}}</td>
+        </tr>
+        <tr>
+          <th scope="col">Average Sightings per Day</th>
+          <td>{{avg_sightings_per_day}}</td>
+        </tr>
+        <tr>
+          <th scope="col">Shift Breakdown</th>
+          <td>
+            <span style="color:skyblue; margin-right: 20px">AM: {{shift_am}} </span>
+            <span style="color:orange;">PM: {{shift_pm}} </span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="col">Age Breakdown</th>
+          <td>
+            <span style="color:skyblue; margin-right: 20px">Adult: {{age_adult}}% </span>
+            <span style="color:orange; margin-right: 20px">Juvenile: {{age_juvenile}}% </span>
+            <span style="color:lightgray; margin-right: 20px">Missing: {{age_missing}}%</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="col">Primary Fur Color Breakdown</th>
+          <td>
+            <span style="color:gray; margin-right: 20px">Gray: {{color_gray}}%</span>
+            <span style="color:saddlebrown; margin-right: 20px">Cinnamon: {{color_cinnamon}}%</span>
+            <span style="margin-right: 20px">Black: {{color_black}}%</span>
+            <span style="color:lightgray">Missing: {{color_missing}}%</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 style="font-family:Allerta+Stencil,serif;font-size:16px;font-weight:bold; margin-left: 15px">Squirrel Sightings Timeseries</h2>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script>
+    var margin = {top: 20, right: 20, bottom: 100, left: 70},
+        width = 600 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
 
-// Parse the date / time
-var	parseDate = d3.time.format("%Y-%m-%d").parse;
+    // Parse the date / time
+    var	parseDate = d3.time.format("%Y-%m-%d").parse;
 
-var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+    var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
 
-var y = d3.scale.linear().range([height, 0]);
+    var y = d3.scale.linear().range([height, 0]);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom")
-    .tickFormat(d3.time.format("%m-%d-%Y"));
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .tickFormat(d3.time.format("%m-%d-%Y"));
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(5);
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(5);
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
 
-    var timeseries = {{ sighting_timeseries | safe }}
-    var data = []
+        var timeseries = {{ sighting_timeseries | safe }}
+        var data = []
 
-    for(key in timeseries) {
-      data.push({
-          date: key,
-          value: timeseries[key]
+        for(key in timeseries) {
+          data.push({
+              date: key,
+              value: timeseries[key]
+          });
+         }
+
+        data.sort(function(a, b) {
+          return new Date(a.date) - new Date(b.date);
+        });
+
+        data.forEach(function(d) {
+            d.date = parseDate(d.date);
+            d.value = +d.value;
+        });
+
+      x.domain(data.map(function(d) { return d.date; }));
+      y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis)
+        .selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", "-.25em")
+          .attr("transform", "rotate(-90)" );
+
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end");
+
+      svg.selectAll("bar")
+          .data(data)
+        .enter().append("rect")
+          .style("fill", "#ff6361")
+          .attr("x", function(d) { return x(d.date); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.value); })
+          .attr("height", function(d) { return height - y(d.value); });
+    </script>
+    <script>
+
+    var svg = d3.select("body")
+      .append("svg")
+            .attr("height", 350)
+            .attr("width", 500)
+      .append("g")
+
+    svg.append("g")
+      .attr("class", "slices");
+    svg.append("g")
+      .attr("class", "labels");
+    svg.append("g")
+      .attr("class", "lines");
+
+    var width = 500,
+        height = 350,
+      radius = Math.min(width, height) / 2;
+
+    var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) {
+        return d.value;
       });
-     }
 
-    data.sort(function(a, b) {
-      return new Date(a.date) - new Date(b.date);
-    });
+    var arc = d3.svg.arc()
+      .outerRadius(radius * 0.8)
+      .innerRadius(radius * 0.4);
 
-    data.forEach(function(d) {
-        d.date = parseDate(d.date);
-        d.value = +d.value;
-    });
+    var outerArc = d3.svg.arc()
+      .innerRadius(radius * 0.9)
+      .outerRadius(radius * 0.9);
 
-  x.domain(data.map(function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.value; })]);
+    svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-    .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", "-.25em")
-      .attr("transform", "rotate(-90)" );
+    var key = function(d){ return d.data.label; };
 
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end");
+    var color = d3.scale.ordinal()
+      .domain(["Gray", "Cinnamon", "Black", " "])
+      .range(["gray", "saddlebrown", "black", "lightgray"]);
 
-  svg.selectAll("bar")
-      .data(data)
-    .enter().append("rect")
-      .style("fill", "#ff6361")
-      .attr("x", function(d) { return x(d.date); })
-      .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return height - y(d.value); });
-</script>
-<script>
+    function data (){
+      var labels = color.domain();
+      var value;
+      return labels.map(function(label,index){
+        if (index === 0) {
+          value = {{color_gray}}
+        }
+        else if (index === 1) {
+          value = {{color_cinnamon}}
+        }
+        else if (index === 2) {
+          value = {{color_black}}
+        }
+        else {
+          value = {{color_missing}}
+        }
+        return { label: label, value}
+      });
+    }
 
-var svg = d3.select("body")
-	.append("svg")
-        .attr("height", 350)
-        .attr("width", 500)
-	.append("g")
+    change(data());
 
-svg.append("g")
-	.attr("class", "slices");
-svg.append("g")
-	.attr("class", "labels");
-svg.append("g")
-	.attr("class", "lines");
+    function change(data) {
 
-var width = 500,
-    height = 350,
-	radius = Math.min(width, height) / 2;
+      /* ------- PIE SLICES -------*/
+      var slice = svg.select(".slices").selectAll("path.slice")
+        .data(pie(data), key);
 
-var pie = d3.layout.pie()
-	.sort(null)
-	.value(function(d) {
-		return d.value;
-	});
+      slice.enter()
+        .insert("path")
+        .style("fill", function(d) { return color(d.data.label); })
+        .attr("class", "slice");
 
-var arc = d3.svg.arc()
-	.outerRadius(radius * 0.8)
-	.innerRadius(radius * 0.4);
+      slice
+        .transition().duration(1000)
+        .attrTween("d", function(d) {
+          this._current = this._current || d;
+          var interpolate = d3.interpolate(this._current, d);
+          this._current = interpolate(0);
+          return function(t) {
+            return arc(interpolate(t));
+          };
+        })
 
-var outerArc = d3.svg.arc()
-	.innerRadius(radius * 0.9)
-	.outerRadius(radius * 0.9);
+      slice.exit()
+        .remove();
 
-svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+      /* ------- TEXT LABELS -------*/
 
-var key = function(d){ return d.data.label; };
+      var text = svg.select(".labels").selectAll("text")
+        .data(pie(data), key);
 
-var color = d3.scale.ordinal()
-	.domain(["Gray", "Cinnamon", "Black", " "])
-	.range(["gray", "saddlebrown", "black", "lightgray"]);
+      text.enter()
+        .append("text")
+        .attr("dy", ".35em")
+        .text(function(d) {
+          return d.data.label;
+        });
 
-function data (){
-	var labels = color.domain();
-	var value;
-	return labels.map(function(label,index){
-	  if (index === 0){
-	    value = {{color_gray}}
+      function midAngle(d){
+        return d.startAngle + (d.endAngle - d.startAngle)/2;
       }
-	  else if (index === 1){
-	    value = {{color_cinnamon}}
-      }
-	  else if (index === 2){
-	    value = {{color_black}}
-      }
-	  else{
-	    value = {{color_missing}}
-      }
-		return { label: label, value}
-	});
-}
 
-change(data());
+      text.transition().duration(1000)
+        .attrTween("transform", function(d) {
+          this._current = this._current || d;
+          var interpolate = d3.interpolate(this._current, d);
+          this._current = interpolate(0);
+          return function(t) {
+            var d2 = interpolate(t);
+            var pos = outerArc.centroid(d2);
+            pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+            return "translate("+ pos +")";
+          };
+        })
+        .styleTween("text-anchor", function(d){
+          this._current = this._current || d;
+          var interpolate = d3.interpolate(this._current, d);
+          this._current = interpolate(0);
+          return function(t) {
+            var d2 = interpolate(t);
+            return midAngle(d2) < Math.PI ? "start":"end";
+          };
+        });
 
+      text.exit()
+        .remove();
 
+      /* ------- SLICE TO TEXT POLYLINES -------*/
 
-function change(data) {
+      var polyline = svg.select(".lines").selectAll("polyline")
+        .data(pie(data), key);
 
-	/* ------- PIE SLICES -------*/
-	var slice = svg.select(".slices").selectAll("path.slice")
-		.data(pie(data), key);
+      polyline.enter()
+        .append("polyline");
 
-	slice.enter()
-		.insert("path")
-		.style("fill", function(d) { return color(d.data.label); })
-		.attr("class", "slice");
+      polyline.transition().duration(1000)
+        .attrTween("points", function(d){
+          this._current = this._current || d;
+          var interpolate = d3.interpolate(this._current, d);
+          this._current = interpolate(0);
+          return function(t) {
+            var d2 = interpolate(t);
+            var pos = outerArc.centroid(d2);
+            pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+            return [arc.centroid(d2), outerArc.centroid(d2), pos];
+          };
+        });
 
-	slice
-		.transition().duration(1000)
-		.attrTween("d", function(d) {
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				return arc(interpolate(t));
-			};
-		})
-
-	slice.exit()
-		.remove();
-
-	/* ------- TEXT LABELS -------*/
-
-	var text = svg.select(".labels").selectAll("text")
-		.data(pie(data), key);
-
-	text.enter()
-		.append("text")
-		.attr("dy", ".35em")
-		.text(function(d) {
-			return d.data.label;
-		});
-
-	function midAngle(d){
-		return d.startAngle + (d.endAngle - d.startAngle)/2;
-	}
-
-	text.transition().duration(1000)
-		.attrTween("transform", function(d) {
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				var pos = outerArc.centroid(d2);
-				pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
-				return "translate("+ pos +")";
-			};
-		})
-		.styleTween("text-anchor", function(d){
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				return midAngle(d2) < Math.PI ? "start":"end";
-			};
-		});
-
-	text.exit()
-		.remove();
-
-	/* ------- SLICE TO TEXT POLYLINES -------*/
-
-	var polyline = svg.select(".lines").selectAll("polyline")
-		.data(pie(data), key);
-
-	polyline.enter()
-		.append("polyline");
-
-	polyline.transition().duration(1000)
-		.attrTween("points", function(d){
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				var pos = outerArc.centroid(d2);
-				pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-				return [arc.centroid(d2), outerArc.centroid(d2), pos];
-			};
-		});
-
-	polyline.exit()
-		.remove();
-};
-
-</script>
+      polyline.exit()
+        .remove();
+    };
+    </script>
+  </body>
 </html>
