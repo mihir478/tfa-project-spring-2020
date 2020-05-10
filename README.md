@@ -1,6 +1,8 @@
 # Squirrel Tracker Project 
 ## Description
-We built an application to track squirrel sightings. Users can view the map, view a particular sighting and view all the sightings. Users can also see some general statistics on the web.    
+We built an application to track squirrel sightings. Users can view the map, view a particular sighting and view all the sightings. Users can also see some general statistics on the web. 
+
+[See the map](https://tools-268800.uk.r.appspot.com/tracker/map/)   
 
 ## Group Information
 ### Group name and section: Project Group 9, Section 001
